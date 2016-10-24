@@ -1,0 +1,10 @@
+location /upload/ {
+        client_body_temp_path      /var/www/stream/uploads/;
+        client_body_in_file_only   clean;
+        client_body_buffer_size    128K;
+        proxy_pass_request_headers on;
+        proxy_set_header           X-FILE $request_body_file;
+        proxy_set_body             off;
+        proxy_read_timeout         180s;
+        proxy_pass                 http://unix:/var/run/nginx-backend.sock;
+}

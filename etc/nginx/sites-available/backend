@@ -1,0 +1,14 @@
+server {
+		listen unix:/var/run/nginx-backend.sock;
+                server_name  backend.knubz.de;
+                access_log  /var/log/nginx/backend.access.log  combined-anonymous-streamsize-noauth;
+                proxy_read_timeout 600s;
+                uwsgi_read_timeout 600s;
+                uwsgi_connect_timeout 600s;
+                error_log  /var/log/nginx/backend.error.log;
+                location / {
+    include uwsgi_params;
+    uwsgi_pass 127.0.0.1:9090;
+                }
+
+}
